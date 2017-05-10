@@ -1,3 +1,15 @@
+/*
+
+Exporting symbols :
+• Create three modules who all depend on one another.
+• First module takes two module parameters of type int.
+• Second module uses these parameters to add and substract them from one another.
+• Third module prints out the results
+• You need to export symbols as functions in the first and second module.
+  First will have typical getters (get a and get b) and the second will have the add and substract
+
+*/
+
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/moduleparam.h>
