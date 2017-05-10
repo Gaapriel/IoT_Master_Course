@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Tässä yksinkertainen bash scripti joka lähettää viestiä Ravintola-palvelimelle. Ohjelmassa ei ole mitään tarkistuksia
+# parametreille tai viestin läpimenolle. Testattu linux ja macOS. Todennäköisesti ei toimi windowssissa 
+# erno.kilpelainen@hotmail.com
+#
+# Parametrit :
+# - Viesti esim. Ikkuna 1 
+# - Viive sekunteina (0:sta ylöspäin)
+# - Palvelimen osoite (esim. localhost)
+# 
+# HUOM! Muista antaa tälle tiedostolle suoritus-oikeus ennen käynnistystä (terminaalissa) :
+# chmod +x bash_script
+#
+# Scripti pysäytetään ctrl c (joskus joutuu painamaan uuuuuuuuuuuuuuuusemman kerran)
+#
+# Esim.  ./bash_client "viesti ikkunalta 1" 1 localhost  (Lähettää sekunnin välein viestin paikalliselle koneelle)
+#
+# Jos viiveen määrittelee 0:ksi, lähettää ohjelma viestejä niin nopeasti kuin kuin mahdollista.
+#
+# Viestiin lisätään juokseva numero jotta näkee montako viestiä k.o ikkuna on lähettänyt
+#
+# Scripti tulostaa bash ikkunaan vain lähetetyn viestin numeron. Ei viestin sisältöä
+#
+# Scripti olettaa että palvelimella on \b määritelty Socketin uusien viestin odotuksen katkaisu merkiksi
+#
+# Hyvä tapa testata tilaus palvelun suoritustehoa on laittaa esim. 5 kpl bash ikkunoita lähettämään samaan
+# aikaan tilauksia palvelimelle, 0s viiveellä. Itse olen kokeillut 20 bash ikkunalla. 
+# 
+	for i in `seq 1 100000`;
+	do
+		echo -n $1 $i $'\b' | nc $3 5000
+		echo Sending message no : $i
+		if [ $2 -gt 0 ]
+		then
+			sleep $2
+		fi
+	done  
+	exit  
