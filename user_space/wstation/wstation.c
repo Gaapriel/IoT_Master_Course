@@ -35,6 +35,13 @@
  *     Jos sensoreita on enemmän kuin sensori tyyppejä, arvotaan loppujen sensorien tyyppi randomilla
  *     (voi olla esim. useampi lämpötila-anturi yms.)
  *
+ *   Käytetyt tekniikat :
+ *   - Socket kommunikointi
+ *   - Prosessien luonti (fork)
+ *   - Säikeistys
+ *   - Jaettujen resurssien lukitukset (mutex, conditional mutex)
+ *   - Prosessien- ja säikeiden välinen signalointi
+ *
  *   Ohjelman käynnistys :
  *   - Käynnistyy ilman parametreja
  *
@@ -192,7 +199,10 @@ int main(int argc, char *argv[]) {
 
     // Reserve memory for thread parameter ptr
     newsock = malloc(sizeof(int));
- 
+    // Checking (even we reserve just one int)
+    if( newsock == NULL )
+        error("ERROR Cant malloc memory");
+    
     // Print debug info
     print_debug("Main   : Forking sensors", main_pid);
  
